@@ -60,8 +60,24 @@ if __name__ == "__main__":
             for num in range(10000000):
                 a=a+num
 
-            video_object = VideoProcessor(video_file)
+            #Get metadata
+            logger.info("Fetching video Metadata")
+            video_object = VideoProcessor(video_file, subtitle_file)
             video_metadata = video_object.get_metadata()
-            #with status_log:
             status_log.markdown(video_metadata)
             progress_bar.progress(5)
+
+
+            #Generate Frames
+            logger.info("Extracting frames...")
+            session_frames_directory = video_object.extract_frames()
+            progress_bar.progress(10)
+            status_log.markdown(f"Extracted {len(list(session_frames_directory.glob('*.png')))} frames to {session_frames_directory}")
+            logger.info(f"Extracted {len(list(session_frames_directory.glob('*.png')))} frames to {session_frames_directory}")
+
+            #Read captions
+            logger.info("Getting the subtitle file...")
+            session_subtitle_file = video_object.save_captions()
+            status_log.markdown(session_subtitle_file)
+            progress_bar.progress(15)
+            logger.info(f"Fetched the subtitle file... {session_subtitle_file}")
