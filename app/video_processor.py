@@ -23,6 +23,7 @@ class VideoProcessor:
             metadata = {
                 "title": probe.get('format', {}).get('tags', {}).get('title', 'Unknown Title'),
                 "filename": os.path.basename(self.file),
+                "filename_without_extension": os.path.splitext(os.path.basename(self.file))[0],
                 "duration": float(probe['format']['duration']),
                 "filesize_mb": round(float(probe['format']['size']) / (1024 * 1024), 2),
                 "format": probe['format']['format_name'],
@@ -60,6 +61,7 @@ class VideoProcessor:
             with VideoFileClip(str(self.file)) as clip:
                 fps = 1 / env_vars.frame_interval
                 clip.write_images_sequence(str(output_dir / "frame%04d.png"), fps=fps)
+            self.logger.info("OUTPUT_DIR: ", output_dir)
             return output_dir
         except Exception as e:
             self.logger.error(f"Failed to extract frames: {str(e)}")
