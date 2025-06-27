@@ -1,0 +1,9 @@
+app/logs/app.log
+app/__pycache__/
+comms-noBinge
+new-env/
+app/envs/.env
+
+info-Binge
+source/
+docs-noBinge.py

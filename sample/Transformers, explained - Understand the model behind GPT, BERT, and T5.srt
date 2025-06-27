@@ -1,0 +1,858 @@
+1
+00:00:00,000 --> 00:00:01,793
+-The neat thing about working in ML
+
+2
+00:00:01,877 --> 00:00:04,505
+is, every few years,
+somebody invents something crazy
+
+3
+00:00:04,588 --> 00:00:07,216
+that makes you
+totally reconsider what's possible,
+
+4
+00:00:07,299 --> 00:00:11,803
+like models that can play Go
+or generate hyper-realistic faces.
+
+5
+00:00:11,887 --> 00:00:14,806
+Today, the mind-blowing discovery
+rocking everyone's world
+
+6
+00:00:14,890 --> 00:00:17,392
+is a type of neural network
+called a transformer.
+
+7
+00:00:17,476 --> 00:00:21,313
+Transformers are models that can
+translate text, write poems and op-eds,
+
+8
+00:00:21,396 --> 00:00:22,898
+and generate computer code.
+
+9
+00:00:22,981 --> 00:00:26,360
+These will used in biology
+to solve the protein folding problem.
+
+10
+00:00:26,443 --> 00:00:29,238
+Transformers are like
+a magical machine learning hammer
+
+11
+00:00:29,321 --> 00:00:31,532
+that used to make every problem into a nail.
+
+12
+00:00:31,615 --> 00:00:36,161
+If you've heard of the trendy new ML models,
+BERT or GPT-3 or T-5,
+
+13
+00:00:36,245 --> 00:00:38,580
+all of these models
+are based on transformers.
+
+14
+00:00:38,664 --> 00:00:43,001
+If you want to stay hip in machine learning,
+especially in natural language processing,
+
+15
+00:00:43,085 --> 00:00:44,920
+you must know about the transformer.
+
+16
+00:00:45,003 --> 00:00:48,006
+In this video,
+I'll tell you about what transformers are,
+
+17
+00:00:48,090 --> 00:00:50,467
+how they work
+and why they've been so impactful.
+
+18
+00:00:50,551 --> 00:00:51,552
+Let's get to it.
+
+19
+00:00:51,635 --> 00:00:53,136
+So what is a transformer?
+
+20
+00:00:53,220 --> 00:00:55,389
+It's a type of neural network architecture.
+
+21
+00:00:55,472 --> 00:00:58,475
+To recap, neural networks
+are a very effective type of model
+
+22
+00:00:58,559 --> 00:01:02,771
+for analyzing complicated data types
+like images, videos, audio and text.
+
+23
+00:01:02,854 --> 00:01:06,066
+Different neural networks
+are optimized for different data types.
+
+24
+00:01:06,149 --> 00:01:07,818
+Like, if you're analyzing images,
+
+25
+00:01:07,901 --> 00:01:10,529
+you typically use
+a convolutional neural network
+
+26
+00:01:10,612 --> 00:01:14,491
+which is designed to vaguely mimic
+the way the human brain processes vision.
+
+27
+00:01:14,575 --> 00:01:17,411
+Since around 2012,
+neural networks have been really good
+
+28
+00:01:17,494 --> 00:01:20,789
+at solving vision tasks
+like identifying objects in photos.
+
+29
+00:01:20,872 --> 00:01:21,957
+But, for a long time,
+
+30
+00:01:22,040 --> 00:01:25,043
+there wasn't a comparably good
+option for analyzing language,
+
+31
+00:01:25,127 --> 00:01:28,630
+whether for translation
+or text summarization or text generation.
+
+32
+00:01:28,714 --> 00:01:32,175
+This is a problem because language
+is the main way humans communicate.
+
+33
+00:01:32,259 --> 00:01:36,263
+Until transformers came around, the way
+we use deep learning to understand text
+
+34
+00:01:36,346 --> 00:01:40,350
+was with a type of model called
+a recurrent neural network, or an RNN,
+
+35
+00:01:40,434 --> 00:01:42,019
+that looks something like this.
+
+36
+00:01:42,978 --> 00:01:46,064
+Say you wanted to translate
+a sentence from English to French.
+
+37
+00:01:46,148 --> 00:01:48,567
+An RNN would take as input
+an English sentence
+
+38
+00:01:48,650 --> 00:01:50,485
+and process the words one at a time
+
+39
+00:01:50,569 --> 00:01:53,572
+and then sequentially
+spit out their French counterparts.
+
+40
+00:01:53,655 --> 00:01:55,574
+The key word here is "sequential."
+
+41
+00:01:55,657 --> 00:01:59,620
+In language, the order of words matters,
+and you can't just shuffle them around.
+
+42
+00:01:59,995 --> 00:02:03,206
+For example, the sentence
+"Jane went looking for trouble"
+
+43
+00:02:03,290 --> 00:02:06,793
+means something very different than
+"Trouble went looking for Jane."
+
+44
+00:02:06,877 --> 00:02:08,879
+Any model dealing with language
+
+45
+00:02:08,962 --> 00:02:12,090
+has to capture word order
+and recurrent neural networks do this
+
+46
+00:02:12,174 --> 00:02:14,468
+by looking at one word
+at a time sequentially.
+
+47
+00:02:14,551 --> 00:02:16,303
+But RNNs had a lot of problems.
+
+48
+00:02:16,386 --> 00:02:19,848
+First, they never really did  well
+at handling large sequences of text
+
+49
+00:02:19,931 --> 00:02:21,808
+like long paragraphs or essays.
+
+50
+00:02:21,892 --> 00:02:25,771
+By time the end of a paragraph is analyzed,
+they'd forget the beginning of it.
+
+51
+00:02:25,854 --> 00:02:28,649
+And, even worse,
+RNNs were pretty hard to train.
+
+52
+00:02:28,732 --> 00:02:32,319
+Because they process words sequentially,
+they couldn't parallelize well,
+
+53
+00:02:32,402 --> 00:02:35,781
+meaning you couldn't speed them up
+by throwing lots of GPUs at them.
+
+54
+00:02:35,864 --> 00:02:39,576
+With a model that's slow to train,
+you can't train it on that much data.
+
+55
+00:02:39,660 --> 00:02:42,120
+This is where
+the transformer changed everything.
+
+56
+00:02:42,204 --> 00:02:43,955
+They were a model developed in 2017
+
+57
+00:02:44,039 --> 00:02:46,625
+by Google researchers
+and the University of Toronto.
+
+58
+00:02:46,708 --> 00:02:50,671
+They were initially designed for translation,
+but unlike RNNs,
+
+59
+00:02:50,754 --> 00:02:53,423
+you could really efficiently
+parallelize transformers.
+
+60
+00:02:53,507 --> 00:02:56,927
+That meant, with the right hardware,
+you can train really big models.
+
+61
+00:02:57,010 --> 00:02:58,011
+How big?
+
+62
+00:02:58,095 --> 00:02:59,012
+Really big.
+
+63
+00:02:59,096 --> 00:03:03,475
+Remember GPT-3 that model that writes
+poetry and code and has conversations?
+
+64
+00:03:03,558 --> 00:03:06,645
+That was trained
+on almost 45 terabytes of text data,
+
+65
+00:03:06,728 --> 00:03:09,272
+including like almost the entire public web.
+
+66
+00:03:10,440 --> 00:03:13,402
+If you remember anything
+about transformers, let it be this:
+
+67
+00:03:13,485 --> 00:03:16,446
+combine a model
+that scales really well with a huge dataset,
+
+68
+00:03:16,530 --> 00:03:18,615
+the results will probably blow your mind.
+
+69
+00:03:18,699 --> 00:03:20,534
+How do these things actually work?
+
+70
+00:03:20,617 --> 00:03:22,994
+Based on the diagram,
+it should be pretty clear!
+
+71
+00:03:24,121 --> 00:03:25,247
+Or maybe not.
+
+72
+00:03:25,330 --> 00:03:27,374
+Actually, it's simpler than you'd think.
+
+73
+00:03:27,457 --> 00:03:30,502
+There are 3 main innovations
+making this model work so well:
+
+74
+00:03:30,585 --> 00:03:32,462
+Positional encodings, and attention,
+
+75
+00:03:32,546 --> 00:03:35,716
+and specifically a type
+of attention called self-attention.
+
+76
+00:03:36,174 --> 00:03:38,969
+Let's talk about the first one:
+positional encodings.
+
+77
+00:03:39,553 --> 00:03:42,013
+Say we're translating text
+from English to French.
+
+78
+00:03:42,097 --> 00:03:45,809
+Positional encodings is that,
+instead of looking at words sequentially,
+
+79
+00:03:45,892 --> 00:03:47,060
+you take each word
+
+80
+00:03:47,144 --> 00:03:50,522
+and before feeding it to a neural network,
+you slap a number on it--
+
+81
+00:03:50,605 --> 00:03:54,276
+1, 2, 3, depending on what number
+the word is in the sentence.
+
+82
+00:03:54,359 --> 00:03:57,487
+In other words, store information
+about word order in the data
+
+83
+00:03:57,571 --> 00:03:59,781
+rather than in the structure of the network.
+
+84
+00:03:59,865 --> 00:04:02,117
+Then, as you train the network on text data,
+
+85
+00:04:02,200 --> 00:04:05,078
+it learns how to interpret
+those positional encodings.
+
+86
+00:04:05,829 --> 00:04:09,875
+In this way, the neural network learns
+the importance of word order from the data.
+
+87
+00:04:10,459 --> 00:04:13,378
+This is a high-level understanding
+of positional encodings,
+
+88
+00:04:13,462 --> 00:04:17,716
+but it's an innovation that really helped
+make transformers easier to train than RNNs.
+
+89
+00:04:18,175 --> 00:04:21,386
+The next innovation in this paper
+is a concept called attention,
+
+90
+00:04:21,470 --> 00:04:23,805
+which you see used often in ML these days.
+
+91
+00:04:23,889 --> 00:04:26,475
+In fact, the title
+of the original transformer paper
+
+92
+00:04:26,558 --> 00:04:28,393
+is "Attention Is All You Need."
+
+93
+00:04:28,477 --> 00:04:31,688
+"The agreement on the European Economic Area
+
+94
+00:04:31,772 --> 00:04:34,065
+was signed in August 1992."
+
+95
+00:04:34,149 --> 00:04:35,358
+Did you know that?
+
+96
+00:04:35,442 --> 00:04:37,903
+That's the example sentence
+in the original paper,
+
+97
+00:04:37,986 --> 00:04:41,406
+and remember the original transformer
+was designed for translation.
+
+98
+00:04:41,490 --> 00:04:44,326
+Now, imagine trying
+to translate that sentence to French.
+
+99
+00:04:44,409 --> 00:04:48,371
+One bad way to translate text
+is to try to translate each word one for one.
+
+100
+00:04:48,455 --> 00:04:50,290
+In French, some words are flipped
+
+101
+00:04:50,373 --> 00:04:53,752
+like, in the French translation,
+"European" comes before "economic."
+
+102
+00:04:54,252 --> 00:04:57,464
+Plus, French is a language
+with gendered agreement between words.
+
+103
+00:04:57,547 --> 00:05:00,592
+So the word "européenne"
+needs to be in the feminine form
+
+104
+00:05:00,675 --> 00:05:02,260
+to match with "la zone."
+
+105
+00:05:02,344 --> 00:05:04,971
+The attention mechanism
+is a neural network structure
+
+106
+00:05:05,055 --> 00:05:08,683
+allows a text model to look
+at every single word in the original sentence
+
+107
+00:05:08,767 --> 00:05:12,270
+when making a decision about
+translating a word in the output sentence.
+
+108
+00:05:12,354 --> 00:05:14,815
+Here's a nice visualization from that paper
+
+109
+00:05:14,898 --> 00:05:18,360
+that shows what words in
+the input sentence the model is attending to
+
+110
+00:05:18,443 --> 00:05:21,571
+when it makes predictions
+about a word for the output sentence.
+
+111
+00:05:21,655 --> 00:05:24,866
+So, when the model
+outputs the word "européenne,"
+
+112
+00:05:24,950 --> 00:05:28,787
+it's looking at the input words
+"European" and "economic,"
+
+113
+00:05:28,870 --> 00:05:32,082
+you can think of this diagram
+as a sort of heat map for attention
+
+114
+00:05:32,165 --> 00:05:35,418
+and how does the model know
+which words it should be attending to?
+
+115
+00:05:35,502 --> 00:05:38,380
+It's something
+that's learned over time from data.
+
+116
+00:05:38,463 --> 00:05:41,550
+By seeing many examples
+of French and English sentence pairs,
+
+117
+00:05:41,633 --> 00:05:46,012
+the model learns about gender, word order,
+and plurality, and all the grammatical stuff.
+
+118
+00:05:46,096 --> 00:05:48,557
+We talked about
+two key transformer innovations,
+
+119
+00:05:48,640 --> 00:05:50,767
+positional encoding and attention,
+
+120
+00:05:50,851 --> 00:05:53,979
+but actually attention
+had been invented before this paper.
+
+121
+00:05:54,062 --> 00:05:57,858
+The real innovation in transformers
+was something called self-attention.
+
+122
+00:05:57,941 --> 00:05:59,943
+A twist on traditional attention.
+
+123
+00:06:00,026 --> 00:06:04,447
+The type of attention we talked about
+has to do with aligning words in languages,
+
+124
+00:06:04,531 --> 00:06:06,324
+really important for translation,
+
+125
+00:06:06,408 --> 00:06:10,328
+but what if you're just trying to understand
+the underlying meaning in language
+
+126
+00:06:10,412 --> 00:06:14,249
+so that you can build a network
+that can do any number of language tasks.
+
+127
+00:06:14,332 --> 00:06:17,168
+What's incredible
+about neural networks like transformers
+
+128
+00:06:17,252 --> 00:06:19,754
+is that, as they analyze tons of text data,
+
+129
+00:06:19,838 --> 00:06:22,507
+they begin to build up
+this internal representation
+
+130
+00:06:22,591 --> 00:06:25,135
+or understanding of language automatically.
+
+131
+00:06:25,218 --> 00:06:26,845
+They may learn, for example,
+
+132
+00:06:26,928 --> 00:06:30,599
+that the words "programmer,"
+"software engineer," and "software developer"
+
+133
+00:06:30,682 --> 00:06:31,850
+are all synonymous.
+
+134
+00:06:31,933 --> 00:06:36,271
+They may also naturally learn the rules
+of grammar, gender and tense, and so on.
+
+135
+00:06:36,563 --> 00:06:39,858
+The better the internal
+representation of language that's learned,
+
+136
+00:06:39,941 --> 00:06:42,277
+the better it will be at any language task.
+
+137
+00:06:42,360 --> 00:06:44,946
+It turns out
+attention can be an effective way
+
+138
+00:06:45,030 --> 00:06:47,282
+to get a neural network
+to understand language
+
+139
+00:06:47,365 --> 00:06:49,743
+if it's turned on the input text itself.
+
+140
+00:06:50,285 --> 00:06:51,661
+Let me give you an example.
+
+141
+00:06:51,745 --> 00:06:53,455
+Take these two sentences:
+
+142
+00:06:53,538 --> 00:06:55,165
+"Server, can I have the check?"
+
+143
+00:06:55,248 --> 00:06:58,001
+versus
+"Looks like I just crashed the server."
+
+144
+00:06:58,084 --> 00:07:00,795
+The word "server" here
+means two very different things.
+
+145
+00:07:00,879 --> 00:07:04,799
+I know that because I'm looking
+at the context of the surrounding words.
+
+146
+00:07:04,883 --> 00:07:06,801
+Self-attention allows a neural network
+
+147
+00:07:06,885 --> 00:07:09,846
+to understand a word
+in the context of the words around it.
+
+148
+00:07:09,930 --> 00:07:12,891
+When a model processes
+"server" in the first sentence,
+
+149
+00:07:12,974 --> 00:07:15,268
+it might be attending to the word "check"
+
+150
+00:07:15,352 --> 00:07:19,189
+which helps it disambiguate
+from a human server versus a metal one.
+
+151
+00:07:19,272 --> 00:07:22,525
+In the second sentence,
+the model may attend to the word "crashed"
+
+152
+00:07:22,609 --> 00:07:24,611
+to determine this server is a machine.
+
+153
+00:07:24,694 --> 00:07:27,572
+Self-attention
+can also help disambiguate words,
+
+154
+00:07:27,656 --> 00:07:30,575
+recognize parts of speech,
+and even identify word tense.
+
+155
+00:07:31,117 --> 00:07:33,954
+This, in a nutshell,
+is the value of self-attention.
+
+156
+00:07:34,454 --> 00:07:37,082
+So, to summarize, transformers boil down to:
+
+157
+00:07:37,165 --> 00:07:40,710
+positional encodings,
+attention, and self-attention.
+
+158
+00:07:40,794 --> 00:07:44,047
+Of course,
+this is a 10,000-foot look at transformers.
+
+159
+00:07:44,130 --> 00:07:45,840
+But how are they actually useful?
+
+160
+00:07:45,924 --> 00:07:49,094
+One of the most popular
+transformer-based models is called BERT,
+
+161
+00:07:49,177 --> 00:07:52,722
+which was invented just around
+the time that I joined Google in 2018.
+
+162
+00:07:52,806 --> 00:07:54,933
+BERT was trained on a massive text corpus
+
+163
+00:07:55,016 --> 00:07:58,269
+and has become
+this sort of general pocket knife for NLP
+
+164
+00:07:58,353 --> 00:08:01,022
+that can be adapted
+to a bunch of different tasks
+
+165
+00:08:01,106 --> 00:08:03,400
+like text summarization, question answering,
+
+166
+00:08:03,483 --> 00:08:06,403
+classification,
+and finding similar sentences.
+
+167
+00:08:06,486 --> 00:08:09,489
+It's used in Google Search
+to help understand search queries,
+
+168
+00:08:09,572 --> 00:08:12,325
+and it powers
+a lot of Google Cloud's NLP tools,
+
+169
+00:08:12,409 --> 00:08:14,953
+like Google Cloud AutoML Natural Language.
+
+170
+00:08:15,036 --> 00:08:18,748
+BERT also proved that you could
+build very good models on unlabeled data,
+
+171
+00:08:18,832 --> 00:08:21,167
+like text scraped from Wikipedia or Reddit.
+
+172
+00:08:21,251 --> 00:08:25,213
+This is called semi-supervised learning,
+a big trend in machine learning now.
+
+173
+00:08:25,296 --> 00:08:27,132
+GETTING STARTED WITH TRANSFORMERS
+
+174
+00:08:27,215 --> 00:08:29,676
+So, if I've sold you
+on how cool transformers are,
+
+175
+00:08:29,759 --> 00:08:31,678
+you may want to use them in your app.
+
+176
+00:08:31,761 --> 00:08:32,721
+No problem.
+
+177
+00:08:32,804 --> 00:08:36,808
+Tensorflow Hub is a great place to grab
+pre-trained transformer models like BERT.
+
+178
+00:08:36,891 --> 00:08:41,396
+Download them for free in multiple languages
+and drop them straight into your app.
+
+179
+00:08:41,479 --> 00:08:44,816
+You can also check out
+the popular Transformers Python Library
+
+180
+00:08:44,899 --> 00:08:46,401
+built by Hugging Face,
+
+181
+00:08:46,484 --> 00:08:49,863
+a favorite way of the community
+to train and use transformer models.
+
+182
+00:08:49,946 --> 00:08:52,949
+For more transformer tips,
+check out my blog post link below,
+
+183
+00:08:53,033 --> 00:08:54,659
+and thanks for watching!
+
+184
+00:08:55,702 --> 00:08:58,747
+BUILD ANYTHING WITH GOOGLE.
+LINKS IN THE DESCRIPTION BELOW
