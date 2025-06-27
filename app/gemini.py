@@ -91,7 +91,7 @@ class GeminiInference:
         return [str((float(start) + float(end)) / 2) for start, end in matches]
 
     def _prepare_prompt(self, query: str, texts: List[str], images) -> str:
-        context = "\n".join(texts[:3])  # Use top 3 most relevant text chunks
+        context = "\n".join(texts[:4])  # Use top 4 most relevant text chunks
 
         return f""" 
             Analyze the video content and respond to the query provided below:  
@@ -170,8 +170,6 @@ class GeminiInference:
 
             # Generate response
             response = self.model.generate_content([prompt] + images)
-
-            self.logger.info("RESPONSE: ", response)
  
             # Extract timestamps from all texts
             # all_timestamps = []
