@@ -33,7 +33,7 @@ class VideoProcessor:
             return metadata
     
         except Exception as e:
-            self.logger.info(f"Error: {e}")
+            self.logger.info(f"Error while Fetching MetaData: {e}")
             return None
         
 
@@ -60,8 +60,8 @@ class VideoProcessor:
             self.logger.info(f"Extracting frames from video: {self.file}")
             with VideoFileClip(str(self.file)) as clip:
                 fps = 1 / env_vars.frame_interval
-                clip.write_images_sequence(str(output_dir / "frame%04d.png"), fps=fps)
-            self.logger.info("OUTPUT_DIR: ", output_dir)
+                clip.write_images_sequence(str(output_dir / "frame%04d.png"), fps=fps, logger="bar")
+            self.logger.info(f"OUTPUT_DIR:{output_dir}")
             return output_dir
         except Exception as e:
             self.logger.error(f"Failed to extract frames: {str(e)}")
