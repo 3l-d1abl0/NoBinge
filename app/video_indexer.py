@@ -2,6 +2,7 @@ from pathlib import Path
 from logger import logger
 from config import get_envs
 import qdrant_client
+from llama_index.core import load_index_from_storage
 from llama_index.core import Settings, SimpleDirectoryReader, StorageContext
 from llama_index.core.indices import MultiModalVectorStoreIndex
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
@@ -9,6 +10,7 @@ from llama_index.vector_stores.qdrant import QdrantVectorStore
 
 
 class VideoIndexer:
+    
     def __init__(self, embed_model: str, indexing_path: str):
         self.embed_model = embed_model
         self.indexing_path = indexing_path
@@ -18,7 +20,7 @@ class VideoIndexer:
         )
         self.client = None
         
-    def create_multimodal_index(self, host: str, port: int, filename_no_extenstion: str, frames_directory: Path, session_subtitle_file: Path):
+    def create_multimodal_index(self, filename_no_extenstion: str, frames_directory: Path, session_subtitle_file: Path):
 
         try:
             self.logger.info("Creating new multimodal index...")
@@ -40,13 +42,16 @@ class VideoIndexer:
                 vector_store=text_store, image_store=image_store
             )
 
-            self.logger("STORAGE_CONTEXT: ", storage_context)
-            # Load documents (frames and captions)
+            self.logger.info("STORAGE_CONTEXT: ")
+            self.logger.info(storage_context)
+            from llama_index.core.schema import Document, ImageDocument
+            
+            # Create a minimal document for initialization
+            #documents = [Document(text="placeholder")]
             documents = SimpleDirectoryReader(str(frames_directory)).load_data()
-
             # Create index
             index = MultiModalVectorStoreIndex.from_documents(
-                documents,
+                documents=documents,
                 storage_context=storage_context,
             )
 
@@ -106,7 +111,10 @@ class VideoIndexer:
                 #     storage_context=storage_context
                 # )
                 
-                index = MultiModalVectorStoreIndex( storage_context=storage_context )
+                index = MultiModalVectorStoreIndex.from_documents(
+                    vector_store=text_store,
+                    image_vector_store=image_store,
+                )
 
                 return index
             else:

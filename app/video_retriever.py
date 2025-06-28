@@ -25,6 +25,7 @@ class VideoRetriever:
                 if isinstance(result.node, ImageNode):
                     retrieved_images.append(Path(result.node.metadata["file_path"]))
                 else:
+                    #print("retrieval_texts: ", result.text)
                     retrieved_texts.append(result.text)
 
             self.logger.info(

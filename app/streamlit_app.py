@@ -64,6 +64,9 @@ if __name__ == "__main__":
             logger.info("Fetching video Metadata")
             video_object = VideoProcessor(video_file, subtitle_file)
             video_metadata = video_object.get_metadata()
+            if video_metadata == None:
+                raise ValueError("Cannot read Video Metadata")
+            
             status_log.markdown(video_metadata)
             progress_bar.progress(5)
 
@@ -103,11 +106,13 @@ if __name__ == "__main__":
         # Query Section
    
     if "index" in st.session_state and st.session_state.index is not None:
-        st.header("Step 2: Query Video Content 🔍")
-        st.success("✅"+st.session_state.video_file)
+        st.header("Step 2: Query the Video 🔍")
+        #st.success("✅"+st.session_state.video_file)
         if st.session_state.video_file:
-            st.success(st.session_state.video_file)
-            st.video(st.session_state.video_file)
+            #st.success(st.session_state.video_file)
+            col1,_=st.columns([3,2])
+            with col1:
+                st.video(st.session_state.video_file)
 
         
         query = st.text_input("Enter your query:")
@@ -116,7 +121,7 @@ if __name__ == "__main__":
             try:
                 processing_container = st.container()
                 with processing_container:
-                    st.markdown("Query Processing Logs: ")
+                    #st.markdown("Query Processing Logs: ")
                     query_status_log = st.empty()
                     query_progress = st.progress(0)
 
@@ -133,6 +138,8 @@ if __name__ == "__main__":
                     )
 
                     logger.info(retrieved_images)
+                    query_status_log.markdown(retrieved_texts)
+                    #exit()
 
                     query_status_log.markdown("Generating response with Gemini...")
                     response = st.session_state.gemini_inference.process_query(
