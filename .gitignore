@@ -4,6 +4,6 @@ comms-noBinge
 new-env/
 app/envs/.env
 
-info-Binge
+info-noBinge
 source/
 docs-noBinge.py
