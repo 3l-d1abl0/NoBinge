@@ -32,7 +32,7 @@ streamlit run app/streamlit_app.py --server.headless true
 ```
 ## Demo
 
-<video src="https://github.com/3l-d1abl0/NoBinge/blob/main/sample/Transformers%2C%20explained%20-%20Understand%20the%20model%20behind%20GPT%2C%20BERT%2C%20and%20T5.mp4"></video>
+<video src="https://github.com/3l-d1abl0/NoBinge/raw/refs/heads/main/sample/Transformers,%20explained%20-%20Understand%20the%20model%20behind%20GPT,%20BERT,%20and%20T5.mp4"></video>
 
 
 ## Configuration
